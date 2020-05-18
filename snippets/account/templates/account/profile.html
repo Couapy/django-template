@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+
+{% block title %}{{ user.profile.username }} - Profil utilisateur{% endblock title %}
+
+{% block content %}
+{% if success %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Les modifications ont bien été enregistrées.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="col col-3 md-col-12">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-secondary">{{ user.profile.username }}</li>
+                <a href="{% url 'profile' %}" class="list-group-item active">Mon profil</a>
+            </ul>
+        </div>
+        <div class="col">
+            <form action="{% url 'profile' %}" method="POST">
+                {% csrf_token %}
+                {{ profile_form|as_bootstrap }}
+                <input type="submit" value="Enregistrer" class="btn btn-success">
+                <a href="{% url 'delete' %}" class="btn btn-danger float-right"
+                    onclick="return confirm('Etes-vous sûrs de vouloir supprimer votre compte ?')">
+                    Supprimer le compte
+                </a>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
