@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Dependencies
-    'django_forms_bootstrap',
     'social_django',
+    'crispy_forms',
 
     # My snippets
     'account',
@@ -112,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'UTC'
 
@@ -133,13 +133,16 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+# Forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 # OAuth authentication
 # https://python-social-auth-docs.readthedocs.io/en/latest/backends/google.html
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '72006344037-bdk4ojldrb7jcp1sj2g2hqmd3c26vufh.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'oiyR5zmYdZiB2GXRva6nvUg5'
-SOCIAL_AUTH_GITHUB_KEY = ''
-SOCIAL_AUTH_GITHUB_SECRET = ''
+SOCIAL_AUTH_GITHUB_KEY = '36e0c89d7e9f0f45f858'
+SOCIAL_AUTH_GITHUB_SECRET = '6477617f6d9e5386fffafd39425cb109655ebf4b'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.open_id.OpenIdAuth',

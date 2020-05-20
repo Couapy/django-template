@@ -5,19 +5,20 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 
 
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/avatar/user_<id>/<filename>
+    return 'avatar/user_{0}/{1}'.format(instance.user.id, filename)
+
+
 class Profile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    username = models.CharField(
-        verbose_name="Nom d'utilisateur",
-        max_length=64,
-        default="",
-    )
     bio = models.TextField(
         verbose_name="Biographie",
-        max_length=500,
+        help_text="Requis. 300 caractères maximum.",
+        max_length=300,
         blank=True,
         null=True,
     )
@@ -28,12 +29,10 @@ class Profile(models.Model):
     )
     avatar = models.ImageField(
         verbose_name="Photo de profil",
+        upload_to=user_directory_path,
         null=True,
         blank=True,
     )
-
-    def __str__(self):
-        return self.user.__str__()
 
 
 @receiver(post_save, sender=User)

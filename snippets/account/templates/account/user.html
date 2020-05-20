@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}{{ user.profile.username }} - Compte utilisateur{% endblock title %}
+
+{% block head %}
+{{ profile_form.media }}
+{% endblock head %}
+
+{% block content %}
+{% if success %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    Les modifications ont bien été enregistrées.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
+<div class="row">
+    {% include 'account/nav.html' %}
+    <div class="col">
+        <h2>Mon compte utilisateur</h2>
+        {% crispy user_form %}
+        <h2>Supprimer mon compte utilisateur</h2>
+        <p>
+            Attention cette opération va supprimer toutes les données qui sont reliées à votre compte.
+            Cette action est aussi irreversible.
+        </p>
+        <a href="{% url 'account:delete' %}" class="btn btn-danger"
+            onclick="return confirm('Etes-vous sûrs de vouloir supprimer votre compte ?')">
+            Supprimer le compte
+        </a>
+    </div>
+</div>
+{% endblock content %}
