@@ -1,6 +1,6 @@
-config.cfg
-snippets/media/
-snippets/static/
+.vscode
+myproject/media/
+myproject/static/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

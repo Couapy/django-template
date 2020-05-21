@@ -10,7 +10,7 @@ from crispy_forms.bootstrap import FormActions
 class ProfileForm(forms.ModelForm):
     helper = FormHelper()
     helper.layout = Layout(
-        Field('bio', rows=6),
+        Field('biography', rows=6),
         'website',
         'avatar',
         HTML("""{% if profile_form.avatar.value %}<img src="/media/{{ profile_form.avatar.value }}" class="img-responsive rounded" style="width: 256px; max-width: 100%;">{% endif %}""", ),
@@ -24,7 +24,7 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = [
-            "bio",
+            "biography",
             "website",
             "avatar",
         ]

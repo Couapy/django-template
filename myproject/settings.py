@@ -14,14 +14,11 @@ config.read(BASE_DIR + "/config.cfg")
 SECRET_KEY = config.get("DJANGO", "SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config.get("DJANGO", "DEBUG")
 
 ALLOWED_HOSTS = []
 
 # Email configuration
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
-
 EMAIL_HOST = config.get("EMAIL", "EMAIL_HOST")
 EMAIL_PORT = config.get("EMAIL", "EMAIL_PORT")
 EMAIL_HOST_USER = config.get("EMAIL", "EMAIL_HOST_USER")
@@ -42,9 +39,7 @@ INSTALLED_APPS = [
     # Dependencies
     'social_django',
     'crispy_forms',
-
-    # My snippets
-    'account',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -57,13 +52,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'snippets.urls'
+ROOT_URLCONF = 'myproject.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            (os.path.join(BASE_DIR, 'templates')),
+            (os.path.join(BASE_DIR, 'myproject/templates')),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -79,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'snippets.wsgi.application'
+WSGI_APPLICATION = 'myproject.wsgi.application'
 
 
 # Database
@@ -129,12 +124,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'my_project/static/')
 
 
 # Media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'my_project/media/')
 
 
 # Forms
@@ -158,9 +153,9 @@ SOCIAL_AUTH_TWITTER_SECRET = config.get("TWITTER", "SECRET")
 SOCIAL_AUTH_FACEBOOK_KEY = config.get("FACEBOOK", "KEY")
 SOCIAL_AUTH_FACEBOOK_SECRET = config.get("FACEBOOK", "SECRET")
 
-LOGIN_REDIRECT_URL = "/account/profile/"
+LOGIN_REDIRECT_URL = "/accounts/profile/"
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
-AUTH_PROFILE_MODULE = 'account.Profile'
+AUTH_PROFILE_MODULE = 'accounts.Profile'
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
@@ -174,6 +169,6 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.user_details',
 )
 
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/account/profile/'
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/account/profile/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/accounts/profile/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/accounts/profile/'
 SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/'

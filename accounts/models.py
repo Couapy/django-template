@@ -15,9 +15,9 @@ class Profile(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    bio = models.TextField(
+    biography = models.TextField(
         verbose_name="Biographie",
-        help_text="Optionnel. 300 caractères maximum.",
+        help_text="300 caractères maximum.",
         max_length=300,
         blank=True,
         null=True,
@@ -39,8 +39,3 @@ class Profile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()

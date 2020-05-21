@@ -165,7 +165,7 @@ def register(request):
             raw_password = form.cleaned_data.get("password1")
             user = auth.authenticate(username=username, password=raw_password)
             auth.login(request, user)
-            return HttpResponseRedirect(reverse("account:login"))
+            return HttpResponseRedirect(reverse("login"))
 
     context = {
         "register_form": form,
