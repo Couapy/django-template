@@ -1,8 +1,23 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Connexion{% endblock title %}
+
+{% block head %}{% endblock head %}
+
 
 {% block content %}
-<h2>Login</h2>
-<a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
-<a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
-
+<h1>Connexion</h1>
+<h2>Se connecter avec un compte utilisateur</h2>
+<div class="mb-3">
+    {% crispy login_form %}
+    <a href="{% url 'account:register' %}">Créer un compte</a> - <a href="{% url 'account:password-forget' %}">Mot de passe oublié</a>
+</div>
+<h2>Se connecter avec un service tiers</h2>
+<div class="mb-3">
+    <a href="{% url 'social:begin' 'github' %}">Connectez-vous avec GitHub</a><br>
+    <a href="{% url 'social:begin' 'google-oauth2' %}">Connectez-vous avec Google</a><br>
+    <a href="{% url 'social:begin' 'twitter' %}">Connectez-vous avec Twitter</a><br>
+    <a href="{% url 'social:begin' 'facebook' %}">Connectez-vous avec Facebook</a><br>
+</div>
 {% endblock content %}

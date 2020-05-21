@@ -145,13 +145,11 @@ SOCIAL_AUTH_GITHUB_KEY = '36e0c89d7e9f0f45f858'
 SOCIAL_AUTH_GITHUB_SECRET = '6477617f6d9e5386fffafd39425cb109655ebf4b'
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.open_id.OpenIdAuth',
-    # 'social_core.backends.google.GoogleOpenId',
-    'social_core.backends.google.GoogleOAuth2',
-    # 'social_core.backends.google.GoogleOAuth',
-    # 'social_core.backends.twitter.TwitterOAuth',
-    # 'social_core.backends.yahoo.YahooOpenId',
     'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
 )
 
 LOGIN_REDIRECT_URL = "/account/profile/"

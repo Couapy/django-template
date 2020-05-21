@@ -6,8 +6,12 @@ app_name = "account"
 urlpatterns = [
     path('', views.index, name='index'),
     path('login/', views.login, name="login"),
+    path('register/', views.login, name="register"),
+    path('password-forget/', views.login, name="password-forget"),
     path('logout/', views.logout, name="logout"),
     path('profile/', views.profile, name='profile'),
     path('user/', views.user, name='user'),
+    path('password/', views.password, name='password'),
+    path('connections/', views.connections, name='connections'),
     path('delete/', views.delete, name='delete'),
 ]
