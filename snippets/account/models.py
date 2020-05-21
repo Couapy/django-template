@@ -17,7 +17,7 @@ class Profile(models.Model):
     )
     bio = models.TextField(
         verbose_name="Biographie",
-        help_text="Requis. 300 caractères maximum.",
+        help_text="Optionnel. 300 caractères maximum.",
         max_length=300,
         blank=True,
         null=True,

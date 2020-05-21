@@ -6,27 +6,6 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, HTML, Field
 from crispy_forms.bootstrap import FormActions
 
-from .widgets import ImagePreviewWidget
-
-
-class LoginForm(forms.Form):
-
-    helper = FormHelper()
-    helper.layout = Layout(
-        "username",
-        "password",
-        FormActions(
-            Submit('login', 'Connexion')
-        )
-    )
-
-    username = forms.CharField(
-        max_length=100,
-    )
-    password = forms.CharField(
-        widget=forms.PasswordInput
-    )
-
 
 class ProfileForm(forms.ModelForm):
     helper = FormHelper()

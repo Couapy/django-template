@@ -1,18 +1,16 @@
 from django.contrib import auth
-from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import (AdminPasswordChangeForm,
-                                       PasswordChangeForm)
+                                       PasswordChangeForm, UserCreationForm)
 from django.shortcuts import HttpResponseRedirect, render, reverse
-from django.template import Template, Context
-from django.template.loader import render_to_string
+from django.template import Context, Template
 from social_django.models import UserSocialAuth
 
-from .forms import LoginForm, ProfileForm, UserForm
+from .forms import ProfileForm, UserForm
 
 
 def index(request):
-    return HttpResponseRedirect(reverse('account:profile'))
+    return HttpResponseRedirect(reverse("account:profile"))
 
 
 @login_required
@@ -33,10 +31,10 @@ def profile(request):
             success = True
 
     context = {
-        'profile_form': profile_form,
-        'success': success,
+        "profile_form": profile_form,
+        "success": success,
     }
-    return render(request, 'account/profile.html', context)
+    return render(request, "account/settings/profile.html", context)
 
 
 @login_required
@@ -54,10 +52,10 @@ def user(request):
             success = True
 
     context = {
-        'user_form': user_form,
-        'success': success,
+        "user_form": user_form,
+        "success": success,
     }
-    return render(request, 'account/user.html', context)
+    return render(request, "account/settings/user.html", context)
 
 
 @login_required
@@ -68,22 +66,22 @@ def password(request):
     else:
         form = AdminPasswordChangeForm
 
-    if request.method == 'POST':
+    if request.method == "POST":
         password_form = form(request.user, request.POST)
         if password_form.is_valid():
             password_form.save()
-            update_session_auth_hash(request, password_form.user)
+            auth.update_session_auth_hash(request, password_form.user)
             return HttpResponseRedirect(
-                reverse('account:password') + "?success=1"
+                reverse("account:password") + "?success=1"
             )
     else:
         password_form = form(request.user)
 
     context = {
-        'password_form': password_form,
-        'success': "success" in request.GET,
+        "password_form": password_form,
+        "success": "success" in request.GET,
     }
-    return render(request, 'account/password.html', context)
+    return render(request, "account/settings/password.html", context)
 
 
 @login_required
@@ -114,8 +112,8 @@ def connections(request):
         {
             "provider": "facebook",
             "name": "Facebook",
-            "link": "https://facebook.com/{{ data.id }}/",
-            "username": "{{ data.id }}",
+            "link": None,
+            "username": None,
         },
     ]
 
@@ -123,19 +121,19 @@ def connections(request):
 
     for provider in providers:
         try:
-            login = user.social_auth.get(provider=provider['provider'])
+            login = user.social_auth.get(provider=provider["provider"])
         except UserSocialAuth.DoesNotExist:
             login = None
         if login is not None:
-            if provider['link'] is not None:
-                template = Template(provider['link'])
-                context = Context({'data': login.extra_data})
+            if provider["link"] is not None:
+                template = Template(provider["link"])
+                context = Context({"data": login.extra_data})
                 link = template.render(context)
             else:
                 link = None
-            if provider['username'] is not None:
-                template = Template(provider['username'])
-                context = Context({'data': login.extra_data})
+            if provider["username"] is not None:
+                template = Template(provider["username"])
+                context = Context({"data": login.extra_data})
                 username = template.render(context)
             else:
                 username = None
@@ -152,49 +150,31 @@ def connections(request):
 
     context = {
         "services": services,
-        'can_disconnect': can_disconnect
+        "can_disconnect": can_disconnect
     }
-    return render(request, 'account/connections.html', context)
+    return render(request, "account/settings/connections.html", context)
 
 
-def login(request):
-    """Login view."""
-    login_form = LoginForm(
-        data=request.POST or None,
-    )
-    error = ''
+def register(request):
+    form = UserCreationForm()
     if request.method == "POST":
-        if login_form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            user = auth.authenticate(
-                username=username,
-                password=password
-            )
-            if user is not None:
-                if user.is_active:
-                    auth.login(request, user)
-                    return HttpResponseRedirect(reverse('account:index'))
-                else:
-                    error = 'account disabled'
-            else:
-                error = 'invalid login'
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get("username")
+            raw_password = form.cleaned_data.get("password1")
+            user = auth.authenticate(username=username, password=raw_password)
+            auth.login(request, user)
+            return HttpResponseRedirect(reverse("account:login"))
+
     context = {
-        'login_form': login_form,
-        'error': error,
+        "register_form": form,
     }
-    return render(request, 'account/login.html', context)
-
-
-@login_required
-def logout(request):
-    """Logout view."""
-    auth.logout(request)
-    return HttpResponseRedirect('/')
+    return render(request, "account/register.html", context)
 
 
 @login_required
 def delete(request):
     """Delete user account."""
     request.user.delete()
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect("/")

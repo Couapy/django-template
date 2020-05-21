@@ -1,17 +1,20 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
+
 {% block title %}Connexion{% endblock title %}
-
-{% block head %}{% endblock head %}
-
 
 {% block content %}
 <h1>Connexion</h1>
 <h2>Se connecter avec un compte utilisateur</h2>
 <div class="mb-3">
-    {% crispy login_form %}
-    <a href="{% url 'account:register' %}">Créer un compte</a> - <a href="{% url 'account:password-forget' %}">Mot de passe oublié</a>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Enregistrer" class="btn btn-primary">
+        <input type="reset" value="Annuler" class="btn btn-secondary">
+    </form>
+    <a href="{% url 'account:register' %}">Créer un compte</a> - <a href="{% url 'password_reset' %}">Mot de passe oublié</a>
 </div>
 <h2>Se connecter avec un service tiers</h2>
 <div class="mb-3">
