@@ -14,16 +14,18 @@ config.read(BASE_DIR + "/config.cfg")
 SECRET_KEY = config.get("DJANGO", "SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config.get("DJANGO", "DEBUG")
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
 # Email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = config.get("EMAIL", "EMAIL_HOST")
 EMAIL_PORT = config.get("EMAIL", "EMAIL_PORT")
 EMAIL_HOST_USER = config.get("EMAIL", "EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config.get("EMAIL", "EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = config.get("EMAIL", "EMAIL_USE_TLS")
+EMAIL_USE_TLS = config.get("EMAIL", "EMAIL_USE_SSL")
 DEFAULT_FROM_EMAIL = config.get("EMAIL", "DEFAULT_FROM_EMAIL")
 
 # Application definition
@@ -50,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'myproject.urls'
