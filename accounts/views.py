@@ -79,7 +79,7 @@ def password(request):
 
     context = {
         "password_form": password_form,
-        "success": "success" in request.GET,
+        "success": True if "success" in request.GET else None,
     }
     return render(request, "account/settings/password.html", context)
 

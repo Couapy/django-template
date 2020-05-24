@@ -9,19 +9,16 @@
 {% endblock head %}
 
 {% block content %}
-{% if success %}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    Les modifications ont bien été enregistrées.
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-{% endif %}
 <div class="row">
     {% include 'account/nav.html' %}
     <div class="col">
         <h2>Mon profil</h2>
-        {% crispy profile_form %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ profile_form|crispy }}
+            <input type="submit" value="Enregistrer" class="btn btn-primary">
+            <input type="reset" value="Annuler" class="btn btn-secondary">
+        </form>
     </div>
 </div>
 {% endblock content %}
