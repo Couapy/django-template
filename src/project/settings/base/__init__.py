@@ -9,4 +9,4 @@ from .files import *
 from .locale import *
 from .security import *
 
-sys.path.append(BASE_DIR + 'apps')
+sys.path.insert(0, BASE_DIR + '/apps')

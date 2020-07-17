@@ -1,4 +1,6 @@
+import os
 from .constants import BASE_DIR
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -9,6 +11,8 @@ INSTALLED_APPS = [
     # Dependencies
     'social_django',
     'crispy_forms',
+    # My applications
+    'accounts',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
