@@ -10,7 +10,7 @@ install:
 	@.venv/bin/pip3 install -r requirements.txt
 	@echo "Dependencies required are installed."
 
-	@mkdir var
+	@mkdir -p var
 
 	@.venv/bin/python3 src/manage.py collectstatic
 	@echo "Static files are collected."
@@ -26,6 +26,9 @@ update:
 
 run:
 	@.venv/bin/python3 src/manage.py runserver
+
+clean:
+	@rm -rf .venv var
 
 help:
 	@echo "This is the help, the following commands are availables :"
