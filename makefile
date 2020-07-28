@@ -34,4 +34,5 @@ help:
 	@echo "This is the help, the following commands are availables :"
 	@echo "    install - Install the project"
 	@echo "    update - Update the project"
+	@echo "    clean - Clean the project (virtualenv and var folders)"
 	@echo "    help - Show this help"
