@@ -10,6 +10,7 @@ install:
 	@.venv/bin/pip3 install -r requirements.txt
 	@echo "Dependencies required are installed."
 
+	@mkdir -p src/app
 	@mkdir -p var
 
 	@.venv/bin/python3 src/manage.py collectstatic
