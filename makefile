@@ -10,23 +10,23 @@ install:
 	@.venv/bin/pip3 install -r requirements.txt
 	@echo "Dependencies required are installed."
 
-	@mkdir -p src/app
+	@mkdir -p apps
 	@mkdir -p var
 
-	@.venv/bin/python3 src/manage.py collectstatic
+	@.venv/bin/python3 manage.py collectstatic
 	@echo "Static files are collected."
 
-	@.venv/bin/python3 src/manage.py migrate
+	@.venv/bin/python3 manage.py migrate
 	@echo "Database migration done."
 
 	@echo "Installation finished."
 
 update:
 	@git pull
-	@.venv/bin/python3 src/manage.py migrate
+	@.venv/bin/python3 manage.py migrate
 
 run:
-	@.venv/bin/python3 src/manage.py runserver
+	@.venv/bin/python3 manage.py runserver
 
 clean:
 	@rm -rf .venv var
