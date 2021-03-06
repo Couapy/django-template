@@ -1,4 +1,4 @@
-USER_APP_PROVIDERS = [
+accounts_PROVIDERS = [
     {
         "provider": "google-oauth2",
         "name": "Google",
@@ -45,7 +45,7 @@ SOCIAL_AUTH_FACEBOOK_SECRET = ""
 
 LOGIN_REDIRECT_URL = '/accounts/profile/'
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
-AUTH_PROFILE_MODULE = 'user_app.Profile'
+AUTH_PROFILE_MODULE = 'accounts.Profile'
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',

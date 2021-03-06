@@ -1,12 +1,10 @@
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-PROJECT_DIR = os.path.dirname(BASE_DIR)
+from project.settings.base.constants import BASE_DIR
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_DIR, 'var/db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'var/db.sqlite3'),
     }
 }

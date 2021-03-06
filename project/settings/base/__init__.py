@@ -8,4 +8,4 @@ from .files import *
 from .locale import *
 from .security import *
 
-sys.path.insert(0, BASE_DIR + '/app')
+sys.path.insert(0, BASE_DIR + '/apps')

@@ -11,7 +11,7 @@ INSTALLED_APPS = [
     # Dependencies
     'social_django',
     'crispy_forms',
-    'user_app',
+    'accounts',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -36,7 +36,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'user_app.context_processors.providers_settings',
+                'accounts.context_processors.providers_settings',
             ],
         },
     },
