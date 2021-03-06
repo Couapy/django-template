@@ -1,3 +1,25 @@
+# django-user-app
+
+This folder contains a user app for Django 3 projects.
+
+This application is based on Bootstrap v4.5.0.
+
+## What does provides the user app ?
+
+The following features are availables :
+
+- Social Network connections
+    - Github
+    - Google
+    - Twitter
+    - Facebook
+- Profile edition
+- User edition
+- Bootstrap style
+
+## How to install ?
+
+```python
 ACCOUNTS_PROVIDERS = [
     {
         "provider": "google-oauth2",
@@ -25,7 +47,6 @@ ACCOUNTS_PROVIDERS = [
     },
 ]
 
-
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.google.GoogleOAuth2',
@@ -43,7 +64,7 @@ SOCIAL_AUTH_TWITTER_SECRET = ""
 SOCIAL_AUTH_FACEBOOK_KEY = ""
 SOCIAL_AUTH_FACEBOOK_SECRET = ""
 
-LOGIN_REDIRECT_URL = '/accounts/profile/'
+LOGIN_REDIRECT_URL = "/accounts/profile/"
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 AUTH_PROFILE_MODULE = 'accounts.Profile'
 
@@ -62,3 +83,39 @@ SOCIAL_AUTH_PIPELINE = (
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/accounts/profile/'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/accounts/profile/'
 SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/'
+```
+
+Then add the urls to the urlpattern of the project :
+
+```python
+from django.conf import settings
+from django.conf.urls.static import static
+#from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    #path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', include("social_django.urls", namespace="social")),
+] + static(
+    settings.STATIC_URL,
+    document_root=settings.STATIC_ROOT
+) + static(
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT
+)
+```
+
+And finally add the context_processor :
+
+```python
+accounts.context_processors.providers_settings
+```
+
+Then you have to migrate the database with `python3 manage.py migrate`
+
+## How to overdrive the templates ?
+
+
+Then create a new template with the same name and you will be able to overdrive templates.
