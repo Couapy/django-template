@@ -11,7 +11,7 @@ from .forms import ProfileForm, UserForm
 
 
 def index(request):
-    return HttpResponseRedirect(reverse("accounts:profile"))
+    return HttpResponseRedirect(reverse("account:profile"))
 
 
 @login_required
@@ -24,18 +24,17 @@ def profile(request):
     )
     success = None
 
-    if request.method == "POST":
-        if profile_form.is_valid():
-            profile_form.save()
-            # To avoid the image link break
-            profile_form = ProfileForm(instance=request.user.profile)
-            success = True
+    if request.method == "POST" and profile_form.is_valid():
+        profile_form.save()
+        # To avoid the image link break
+        profile_form = ProfileForm(instance=request.user.profile)
+        success = True
 
     context = {
         "profile_form": profile_form,
         "success": success,
     }
-    return render(request, "accounts/settings/profile.html", context)
+    return render(request, "account/settings/profile.html", context)
 
 
 @login_required
@@ -47,16 +46,15 @@ def user(request):
     )
     success = None
 
-    if request.method == "POST":
-        if user_form.is_valid():
-            user_form.save()
-            success = True
+    if request.method == "POST" and user_form.is_valid():
+        user_form.save()
+        success = True
 
     context = {
         "user_form": user_form,
         "success": success,
     }
-    return render(request, "accounts/settings/user.html", context)
+    return render(request, "account/settings/user.html", context)
 
 
 @login_required
@@ -73,7 +71,7 @@ def password(request):
             password_form.save()
             auth.update_session_auth_hash(request, password_form.user)
             return HttpResponseRedirect(
-                reverse("accounts:password") + "?success=1"
+                reverse("account:password") + "?success=1"
             )
     else:
         password_form = form(request.user)
@@ -82,7 +80,7 @@ def password(request):
         "password_form": password_form,
         "success": True if "success" in request.GET else None,
     }
-    return render(request, "accounts/settings/password.html", context)
+    return render(request, "account/settings/password.html", context)
 
 
 @login_required
@@ -126,7 +124,7 @@ def connections(request):
         "services": services,
         "can_disconnect": can_disconnect
     }
-    return render(request, "accounts/settings/connections.html", context)
+    return render(request, "account/settings/connections.html", context)
 
 
 def register(request):
@@ -144,11 +142,11 @@ def register(request):
     context = {
         "register_form": form,
     }
-    return render(request, "accounts/register.html", context)
+    return render(request, "account/register.html", context)
 
 
 @login_required
 def delete(request):
-    """Delete user accounts."""
+    """Delete user account."""
     request.user.delete()
     return HttpResponseRedirect("/")

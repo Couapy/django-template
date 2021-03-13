@@ -2,6 +2,7 @@ import os
 from .constants import BASE_DIR
 
 INSTALLED_APPS = [
+    # Django applications
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -11,7 +12,11 @@ INSTALLED_APPS = [
     # Dependencies
     'social_django',
     'crispy_forms',
-    'accounts',
+    # My applications
+    'account',
+    'billing',
+    'blog',
+    'comments',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -36,7 +41,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'accounts.context_processors.providers_settings',
+                'account.context_processors.providers_settings',
             ],
         },
     },

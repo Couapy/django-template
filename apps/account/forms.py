@@ -1,10 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
 
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, HTML, Field
-from crispy_forms.bootstrap import FormActions
+from .models import Profile
 
 
 class ProfileForm(forms.ModelForm):

@@ -34,7 +34,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "78057430349-snmfbg6n2pn65c10mi77a9tie5hjbbfb.apps.googleusercontent.com"
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "78057430349-snmfbg6n2pn65c10mi77a9tie5hjbbfb.googleusercontent.com"
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "098ln2BZf9ZHjT1gkjTm5say"
 SOCIAL_AUTH_GITHUB_KEY = ""
 SOCIAL_AUTH_GITHUB_SECRET = ""
@@ -43,9 +43,11 @@ SOCIAL_AUTH_TWITTER_SECRET = ""
 SOCIAL_AUTH_FACEBOOK_KEY = ""
 SOCIAL_AUTH_FACEBOOK_SECRET = ""
 
-LOGIN_REDIRECT_URL = '/accounts/profile/'
+LOGIN_URL = '/account/login/'
+LOGIN_REDIRECT_URL = '/account/profile/'
+LOGOUT_REDIRECT_URL = '/'
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
-AUTH_PROFILE_MODULE = 'accounts.Profile'
+AUTH_PROFILE_MODULE = 'account.Profile'
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
@@ -59,6 +61,6 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.user_details',
 )
 
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/accounts/profile/'
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/accounts/profile/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = LOGIN_REDIRECT_URL
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = LOGIN_REDIRECT_URL
 SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/'
