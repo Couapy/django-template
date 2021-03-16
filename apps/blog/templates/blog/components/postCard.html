@@ -1,0 +1,10 @@
+{% load static %}
+<div class="card w-100 mb-3">
+    <div class="card-body">
+        <h4 class="card-title">{{ post.title }}</h4>
+        <p class="card-text">{{ post.description }}</p>
+        <div class="text-right">
+            <a href="{% url 'blog:post' post.slug %}">See more</a>
+        </div>
+    </div>
+</div>
