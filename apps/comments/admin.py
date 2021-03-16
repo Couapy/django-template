@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import CommentZone, Comment
 
-# Register your models here.
+
+admin.site.register(CommentZone)
+admin.site.register(Comment)

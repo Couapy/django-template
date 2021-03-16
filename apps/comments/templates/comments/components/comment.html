@@ -1,0 +1,39 @@
+{% load static %}
+<div is="div-comment" class="media" id="comment-{{ comment.pk }}">
+    {% if comment.author.profile.avatar.url is not None %}
+    <img src="{{ comment.author.profile.avatar.url }}" alt="{{ comment.author.username }}'s profile picture" class="mr-3 rounded">
+    {% else %}
+    <img src="{% static 'account/assets/default.svg' %}" alt="{{ comment.author.username }}'s profile picture" class="mr-3 rounded">
+    {% endif %}
+    <div class="media-body">
+        <h5 class="mt-0">
+            <span class="author">{{ comment.author.username }}</span>
+            <span class="dot"></span>
+            <span class="date">{{ comment.publication_date }}</span>
+            {% if comment.edited %}
+            <span class="dot"></span>
+            <span class="date">(edited {{ comment.modification_date}})</span>
+            {% endif %}
+        </h5>
+        <div class="body">
+            {{ comment.body }}
+        </div>
+        <div class="actions mb-3 mt-2">
+            <a href="#" class="like{% if request.user in comment.user_liked.all %} liked{% endif %}">
+                <img src="{% static 'comments/assets/hearth.svg' %}" alt="like">
+                <span class="likes">{{ comment.user_liked.count }} likes</span>
+            </a>
+            <span class="dot"></span>
+            <a href="#" class="reply">Reply</a>
+            {% if request.user == comment.author %}
+            <span class="dot"></span>
+            <a href="#" class="edit">Edit</a>
+            <span class="dot"></span>
+            <a href="#" class="delete">Delete</a>
+            {% endif %}
+        </div>
+        {% for comment in comment.replies.all %}
+        {% include 'comments/components/comment.html' %}
+        {% endfor %}
+    </div>
+</div>

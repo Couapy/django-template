@@ -40,6 +40,10 @@ class Profile(models.Model):
         blank=True,
     )
 
+    def __str__(self):
+        return self.user.__str__()
+    
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
