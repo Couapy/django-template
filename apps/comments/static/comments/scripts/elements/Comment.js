@@ -57,10 +57,12 @@ export default class Comment extends HTMLDivElement {
 
     onLike(e) {
         e.preventDefault();
+        let form = new FormData();
+        form.append('like', true);
         request(
-            '/comments/like/' + this.comment.id + '/',
-            'GET',
-            null,
+            '/comments/comment/' + this.comment.id + '/',
+            'POST',
+            form,
             (response) => {
                 let res = JSON.parse(response);
                 this.elements.likes.innerHTML = res.likes + ' likes';
