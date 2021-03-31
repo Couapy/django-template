@@ -62,13 +62,11 @@ class CommentView(View):
             return HttpResponseBadRequest()
 
         comment = get_object_or_404(Comment, pk=id)
-        if request.user in comment.user_liked.all():
-            comment.user_liked.remove(request.user)
-        else:
-            comment.user_liked.add(request.user)
+        result = comment.toggle_like(request.user)
         response = {
             'success': True,
-            'likes': comment.user_liked.count()
+            'likes': comment.user_liked.count(),
+            'is_liking': result,
         }
         return JsonResponse(response, safe=True)
 

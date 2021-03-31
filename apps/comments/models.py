@@ -1,5 +1,8 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+
 
 class CommentZone(models.Model):
     """Represents a comment zone."""
@@ -24,7 +27,6 @@ class CommentZone(models.Model):
             return "CommentZone n°" + str(self.pk)
         return self.name
     
-
 
 class Comment(models.Model):
     """Represent a comment."""
@@ -61,7 +63,36 @@ class Comment(models.Model):
         """Indicates if the comment has been edited."""
         return self.publication_date != self.modification_date
 
+    def reply(self, comment):
+        """Reply to this comment."""
+        self.replies.add(comment)
+
+    def toggle_like(self, user):
+        """
+        Toggle like of user on this comment.
+        Return True if the user is currently liking the comment.
+        """
+        if user is None:
+            return False
+
+        if user in self.user_liked.all():
+            self.user_liked.remove(user)
+            return False
+        else:
+            self.user_liked.add(user)
+            return True
+
+    def delete(self, *args, **kwargs):
+        models.Model.delete(self, *args, **kwargs)
+        for reply in self.replies.all():
+            reply.delete()
+
     def __str__(self):
         """Display a part of the body."""
         return self.body[:150]
     
+
+@receiver(pre_delete, sender=Comment)
+def pre_delete_story(sender, instance, **kwargs):
+    for reply in instance.replies.all():
+        reply.delete()
