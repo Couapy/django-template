@@ -1,6 +1,6 @@
 import os
 
-from project.settings.base.constants import BASE_DIR
+from project.settings import BASE_DIR
 
 DATABASES = {
     'default': {
@@ -8,3 +8,5 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'var/db.sqlite3'),
     }
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
