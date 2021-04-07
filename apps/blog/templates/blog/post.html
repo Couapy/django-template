@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }}{% endblock title %}
+
+{% block head %}
+<!-- SEO meta tags -->
+<meta name="description" content="{{ post.description }}">
+<meta name="robots" content="index, follow">
+<meta name="author" content="{{ post.author }}">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- <meta http-equiv="content-language" content="en"> -->
+
+<!-- OpenGraph meta tags -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{ post.title }}">
+<!-- <meta property="og:site_name" content="MyBlog"> -->
+<meta property="og:url" content="{% url 'blog:post' post.slug %}">
+<!-- <meta property="og:image" content="{{ post.illustration }}"> -->
+<meta property="article:published_time" content="{{ post.publication_date }}">
+<meta property="article:modified_time" content="{{ post.modification_date }}">
+<meta property="article:author" content="{{ post.author }}">
+
+<!-- Twitter meta tags -->
+<meta name="twitter:card" content="app">
+<!-- <meta name="twitter:site" content="@twitteraccount"> -->
+<meta name="twitter:description" content="{{ post.description }}">
+<meta name="twitter:app:country" content="fr">
+
+<!-- Execute comment app -->
+<script src="{% static 'comments/scripts/app.js' %}" type="module" defer></script>
+<!-- Stylish page -->
+<link rel="stylesheet" href="{% static 'blog/styles/post.css' %}">
+<link rel="stylesheet" href="{% static 'comments/styles/comment.css' %}">
+{% endblock head %}
+
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <div class="d-flex align-items-center mb-2 text-muted">
+        <span class="info">{{ post.author }}</span>
+        <span class="info">Publié le {{ post.publication_date }}</span>
+        {% if post.publication_date != post.edition_date %}
+        <span class="info">Modifié le {{ post.modification_date }}</span>
+        {% endif %}
+    </div>
+    <div class="tags mb-4">
+        {% for tag in post.tags.all %}
+        <span class="badge badge-secondary">{{ tag.name }}</span>
+        {% endfor %}
+    </div>
+    {{ post.body }}
+    <hr>
+    {% with post.comment_zone as comment_zone %}
+    {% include 'comments/comment_zone.html' %}
+    {% endwith %}
+{% endblock content %}

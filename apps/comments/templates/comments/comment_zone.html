@@ -1,0 +1,5 @@
+<div class="comments" id="comment-zone-{{ comment_zone.pk }}">
+    {% for comment in comment_zone.comments.all %}
+        {% include 'comments/components/comment.html' %}
+    {% endfor %}
+</div>
