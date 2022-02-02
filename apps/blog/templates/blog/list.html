@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}All posts{% endblock title %}
+
+{% block content %}
+    <h1>All posts</h1>
+    {% for post in posts %}
+    {% include 'blog/components/postCard.html' %}
+    {% empty %}
+    <div class="alert alert-warning" role="alert">
+        There are no posts.
+    </div>
+    {% endfor %}
+{% endblock content %}
